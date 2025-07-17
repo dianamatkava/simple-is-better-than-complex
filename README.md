@@ -1,51 +1,56 @@
 # About
-Nov 2021
-This project was created following by [Simple is better than complex](https://simpleisbetterthancomplex.com/) lessons 
+Nov 2021  
+This project was created following the [Simple is better than complex](https://simpleisbetterthancomplex.com/) lessons
 
-+additional tutorials from this resource
++ additional tutorials from this resource
 
-
-* Django (basic), Django Unit Test, Celery, Shell, Docker, JavaScript, 
-* Crop Images, adding multiple users, upload multiple files, 
+* Django (basic), Django Unit Test, Celery, Shell, Docker, JavaScript
+* Crop Images, adding multiple users, upload multiple files
 * Reset password, SendEmail, crispyForm, allauth
-* recaptcha, PDF and CSV export, history log
+* reCAPTCHA, PDF and CSV export, history log
 
 
 # Build the project
 
+## Environment  
+Create a `.env.dev` file at the project root with the following variables:
 
-## Build the project using Docker
+```dotenv
+SECRET_KEY=your_secret_key
+DB_NAME=your_db_name
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_HOST=your_db_host
+DB_PORT=your_db_port
+EMAIL_HOST_USER=your_email_user
+EMAIL_HOST_PASSWORD=your_email_password
+GOOGLE_RECAPTCHA_SECRET_KEY=your_recaptcha_secret
+RECAPTCHA_PRIVATE_KEY=your_recaptcha_private_key
+RECAPTCHA_PUBLIC_KEY=your_recaptcha_public_key
+```  
 
-Build, run and stop docker:
-
+## Using Docker Compose (development)
 ```bash
 # build docker image
-sudo docker-compose -f docker-compose.yml build
+docker-compose -f docker-compose.dev.yml build
 
-# run docker image
-sudo docker-compose -f docker-compose.yml up -d
+# start services
+docker-compose -f docker-compose.dev.yml up -d
 
-# stop docker image
-sudo docker-compose -f docker-compose.yml down
-```
-###### (Remove sudo if command <sudo> not found. Remove <-d> to see logs)
+# stop services
+docker-compose -f docker-compose.dev.yml down
+```  
+(Remove `-d` to see logs. Use `sudo` if necessary.)
 
-
-Build, run and stop docker using Makefile:
-
-```bash
-# build docker image
-make build-dev
-
-# run docker image
-make run-dev
-
-# stop docker image
-make down-dev
-```
-
+---
 
 # Celery
 
-#run celery: celery -A myproject worker -l info
-#run celery flower: celery flower --port=5555
+To run a worker:
+```bash
+celery -A myproject worker -l info
+```
+To run Flower monitoring:
+```bash
+celery flower --port=5555
+```
